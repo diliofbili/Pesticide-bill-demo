@@ -1380,7 +1380,7 @@ h2 {
   /* Ensure the item name takes the left-most part */
   .selected-item-name {
     flex: 1;          /* It takes remaining space */
-    min-width: 70px; /* Reserve a minimum space so it doesn't get squeezed */
+    min-width: 90px; /* Reserve a minimum space so it doesn't get squeezed */
     overflow: visible;
     white-space: nowrap;
   }
@@ -1401,7 +1401,7 @@ h2 {
   
   /* Adjust the quantity display */
   .cart-quantity {
-    min-width: 25px;
+    min-width: 10px;
     text-align: center;
     font-weight: bold;
   }
@@ -1421,7 +1421,7 @@ h2 {
   .selected-item-total-trash {
     display: flex;
     align-items: center;
-    gap: 2px; /* Reduced gap between total and trash icon */
+    gap: 1px; /* Reduced gap between total and trash icon */
   }
   /* Style the total price */
   .selected-item-total {
@@ -1439,27 +1439,5 @@ h2 {
     font-size: 18px;
   }
 
-/* --- Begin: Force cart row to display in one straight line --- */
-.selected-item-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 10px;
-}
 
-.selected-item-row .selected-item-name {
-  flex: 1;
-  min-width: 100px; /* Adjust if needed */
-  overflow: visible;
-  white-space: nowrap;
-}
-
-.selected-item-row > .quantity-btn,
-.selected-item-row > .cart-quantity,
-.selected-item-row > .item-price-display,
-.selected-item-row > .equals-sign,
-.selected-item-row > .selected-item-total-trash {
-  flex: 0 0 auto;
-}
-/* --- End: Force cart row to display in one straight line --- */
     
