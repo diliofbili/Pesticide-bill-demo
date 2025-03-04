@@ -1438,4 +1438,28 @@ h2 {
     cursor: pointer;
     font-size: 18px;
   }
+
+/* --- Begin: Force cart row to display in one straight line --- */
+.selected-item-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.selected-item-row .selected-item-name {
+  flex: 1;
+  min-width: 100px; /* Adjust if needed */
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.selected-item-row > .quantity-btn,
+.selected-item-row > .cart-quantity,
+.selected-item-row > .item-price-display,
+.selected-item-row > .equals-sign,
+.selected-item-row > .selected-item-total-trash {
+  flex: 0 0 auto;
+}
+/* --- End: Force cart row to display in one straight line --- */
     
