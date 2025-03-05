@@ -1,0 +1,3248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input, textarea {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    min-height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.search-section {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex; /* Ensure they stay in a row */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px;
+}
+
+#search-input {
+    padding: 8px 12px; /* Slightly reduced for smaller size */
+    font-size: 15px; /* Slightly smaller but readable */
+    border: 1px solid #333; /* Keep the border */
+    border-radius: 4px 0 0 4px; /* Keep rounded corners */
+    flex-grow: 1; /* Still takes available space */
+    height: 35px; /* Slightly reduced height */
+    background-color: #333;
+    color: #e0e0e0;
+}
+ 
+#search-input::placeholder {
+    color: #888;
+}
+
+#toggle-list-btn {
+    padding: 8px 12px; /* Slightly reduced for smaller size */
+    font-size: 15px; /* Slightly smaller but readable */
+    background-color: #4CAF50; /* Keep green button */
+    color: white; /* Keep white text */
+    border: none; /* Keep no border */
+    border-radius: 0 4px 4px 0; /* Keep rounded corners */
+    cursor: pointer; /* Keep pointer cursor */
+    height: 35px; /* Match search input height */
+}
+
+.selected-items-container, .all-items-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #252525;
+}
+
+.selected-items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.clear-cart-btn {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+/* Salt category heading */
+.salt-category {
+    text-align: center;
+    font-weight: bold;
+    background-color: #2c3e50;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #4CAF50;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: #333;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.item-name-container {
+    display: flex;
+    align-items: center;
+}
+
+.item-info {
+    flex-grow: 1;
+}
+
+.item-name {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 15px;
+    color: #e0e0e0;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #4CAF50;
+    margin-left: 8px;
+}
+
+.item-company {
+    font-size: 13px;
+    color: #888;
+    margin-left: 5px;
+}
+
+.item-composition {
+    font-size: 12px;
+    color: #888;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
+}
+
+.quantity-display {
+    width: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2d4a3e;
+    animation: slideDown 0.3s ease forwards;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.selected-item-details {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.selected-item-details button {
+    margin: 0 5px;
+}
+
+.selected-item-total {
+    margin-right: 10px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.remove-item-btn {
+    background-color: transparent;
+    color: #f44336;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.grand-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 8px;
+    border-top: 2px solid #4CAF50;
+    color: #4CAF50;
+}
+
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #4CAF50;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #4CAF50;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.error-message {
+    color: #f44336;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(244, 67, 54, 0.1);
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Loading and error messages */
+.loading-message {
+    text-align: center;
+    padding: 20px;
+    color: #4CAF50;
+}
+
+.error-message {
+    text-align: center;
+    padding: 20px;
+    color: #f44336;
+    background-color: rgba(244, 67, 54, 0.1);
+    border-radius: 4px;
+}
+
+/* Selected item styles to handle the trash button */
+.selected-item {
+    display: flex;
+    justify-content: flex-start; /* Change from space-between to flex-start */
+    align-items: center;
+    background-color: #2d4a3e;
+    position: relative;
+    /* Make sure there's no flex-wrap property, or set it to nowrap */
+}
+
+.selected-item-details {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.selected-item-details button {
+    margin: 0 5px;
+}
+
+.selected-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between total and remove button */
+}
+
+.selected-item-total {
+    margin-right: 10px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.remove-item-btn {
+    background-color: transparent;
+    color: #f44336;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+#loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: #4CAF50;
+}
+.selected-item-details {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.quantity-controls-cart {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.selected-item .quantity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.selected-item .increase-selected {
+    background-color: #4CAF50;
+}
+
+.selected-item .decrease-selected {
+    background-color: #f44336;
+}
+
+.selected-item .quantity-display {
+    margin: 0 5px;
+    min-width: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+/* Fix alignment of plus/minus buttons in cart */
+.selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selected-item-details {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    white-space: nowrap; /* Keep text on one line */
+}
+
+.quantity-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3px;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+/* Fix for button alignment in cart items */
+.selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.selected-item-name {
+    flex: 1; /* Allows the name to take available space */
+    white-space: nowrap; /* Keeps the name on one line */
+    overflow: visible; /* Ensures the full name is visible, no truncation */
+    text-overflow: clip; /* Removes ellipsis if text overflows, showing full text instead */
+    margin-right: 15px; /* Keep the right margin */
+}
+
+.selected-item-controls {
+    /* Find this class and add/modify this property */
+    margin-left: 15px; /* Increase this value, possibly from 10px to 15px */
+    display: flex;
+    align-items: center;
+}
+.quantity-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3px;
+    flex-shrink: 0;
+}
+.price-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Improved styling for edit price button */
+.edit-price-btn {
+    background-color: #2d4a3e;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+
+.edit-price-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.price-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #4CAF50;
+}
+/* Animation for price change confirmation */
+@keyframes priceChangeHighlight {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(76, 175, 80, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.price-changed {
+    animation: priceChangeHighlight 1.5s ease;
+}
+
+/* Toast notification style */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2d4a3e;
+    color: white;
+    border-left: 4px solid #4CAF50;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-notification i {
+    margin-right: 10px;
+    color: #4CAF50;
+}
+/* Floating cart styles */
+.floating-cart {
+    position: fixed;
+    top: calc(40vh - 150px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 760px;
+    max-height: 40vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.floating-cart-fade {
+    opacity: 0.5;
+    transform: translateX(-50%) translateY(20px);
+}
+
+/* Make the floating cart scrollable if too many items */
+.floating-cart #selected-items-list {
+    max-height: 25vh;  
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Style the scrollbar */
+.floating-cart #selected-items-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 10px;
+}
+
+/* Add a close button to the floating cart */
+.floating-cart::after {
+    content: "×";
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Handle mobile responsiveness better */
+@media (max-width: 480px) {
+    .floating-cart {
+        width: 95%;
+        top: auto;
+        bottom: 0;
+        border-radius: 8px 8px 0 0;
+        max-height: 50vh;
+    }
+}
+
+/* Animation for price change confirmation */
+@keyframes priceChangeHighlight {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(76, 175, 80, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.price-changed {
+    animation: priceChangeHighlight 1.5s ease;
+}
+
+/* Cart quantity indicator */
+.cart-quantity {
+    cursor: pointer;
+    border-bottom: 1px dashed #4CAF50;
+    padding: 0 3px;
+}
+
+.cart-quantity:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+/* Improved mobile cart styling */
+@media (max-width: 600px) {
+    /* Better structure for the selected item in cart */
+    .selected-item {
+        display: flex;
+        justify-content: flex-start; /* Align items to the left for compactness */
+        align-items: center;
+        padding: 8px 10px;
+        position: relative;
+        background-color: #2d4a3e;
+        border-radius: 6px;
+        margin-bottom: 6px;
+        width: 100%; /* Ensure full width */
+        gap: 5px; /* Tight spacing for single line */
+    }
+    
+    /* Name on its own row for better clarity */
+    .selected-item-name {
+        flex: 1; /* Take available space */
+        white-space: nowrap; /* Keep on one line for clarity */
+        overflow: visible; /* Show full text */
+        text-overflow: clip; /* No ellipsis */
+        max-width: 55%; /* Increase width to ensure full names fit */
+        font-size: 14px;
+        margin-right: 15px; /* More space for controls */
+        padding-right: 0; /* Remove extra padding */
+    }
+    
+    .selected-item-name::after {
+        content: none; /* Remove the green arrow entirely */
+    }
+    .selected-item.expanded .selected-item-name::after {
+        content: none; /* Ensure no arrow in expanded state either */
+    }
+    .selected-item.expanded {
+        height: auto;
+        padding: 15px 12px;
+        margin-bottom: 10px;
+        background-color: #1a382e;
+    }
+    .selected-item.expanded .selected-item-name {
+        width: 100%;
+        white-space: normal; /* Allow wrapping in expanded state */
+        margin-bottom: 10px;
+        font-weight: bold;
+        overflow: visible;
+        max-width: none; /* Full width in expanded state */
+    }
+    
+    /* Controls row with enough spacing */
+    .selected-item-controls {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        gap: 2px; /* Very tight spacing */
+        flex-shrink: 0; /* Prevent shrinking */
+    }
+    
+    /* Better spacing for price display */
+    .selected-item-controls .item-price-display {
+        margin-left: 5px;
+        white-space: nowrap;
+    }
+    
+    /* Ensure actions stay in place */
+    .selected-item-actions {
+        margin-left: 15px; /* Shift further right to fit full names */
+        display: flex;
+        align-items: center;
+        gap: 2px; /* Very tight spacing */
+        flex-shrink: 0; /* Prevent shrinking */
+    }
+    /* Make total price more prominent */
+    .selected-item-total {
+        font-weight: bold;
+        min-width: 50px; /* Ensure space for total */
+        text-align: right;
+        margin-left: 2px; /* Minimal space */
+    }
+    
+    /* Ensure trash icon is always visible and easy to tap */
+    .remove-item-btn {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 2px;
+        flex-shrink: 0;
+    }
+
+    /* Customize the floating cart for mobile */
+    .floating-cart {
+        width: 100%;
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        border-radius: 12px 12px 0 0;
+        max-height: 60vh;
+        padding-bottom: 10px; /* Safe area padding */
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ensure proper spacing in cart header for mobile */
+    .selected-items-header {
+        padding: 0 10px;
+    }
+    
+    /* Make "Clear Cart" button more visible and tappable */
+    .clear-cart-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 50px;
+        height: 36px;
+    }
+    
+    /* Better grand total display on mobile */
+    .grand-total {
+        text-align: right;
+        font-size: 18px;
+        padding: 12px 15px;
+        margin-top: 5px;
+        background-color: #2d4a3e;
+        border-top: 1px solid #4CAF50;
+        border-radius: 0 0 12px 12px;
+    }
+    
+    /* Add visual indicator for scrollable cart */
+    .floating-cart::before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+}
+
+/* Quantity display in cart for all devices */
+.cart-quantity {
+    display: inline-block;
+    min-width: 25px;
+    text-align: center;
+}
+
+/* Make item price display clearer */
+.item-price-display {
+    margin-left: 2px;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+/* .item-price-display::after {
+    content: " = ";
+    margin-left: 2px;
+    color: #4CAF50;
+} */
+
+/* Animation for appearing cart */
+@keyframes slideUp {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(0); }
+}
+
+.floating-cart {
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+/* For consistent presentation */
+.selected-item {
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+/* Improve grand total contrast */
+#grand-total-value {
+    font-weight: bold;
+}
+
+/* Ultra-compact mobile cart styling */
+@media (max-width: 600px) {
+    /* Compact single-line layout for cart items */
+    .selected-item {
+        display: flex;
+        justify-content: flex-start; /* Change from space-between to flex-start */
+        align-items: center;
+        background-color: #2d4a3e;
+        position: relative;
+        /* Make sure there's no flex-wrap property, or set it to nowrap */
+    }
+    .toggle-cart-arrow {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+    /* Item prefix and name - ellipsis for long names */
+    .selected-item-name {
+        flex: 1;
+        min-width: 0; /* Allow flex item to shrink below content size */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 5px;
+        font-size: 14px;
+    
+    }
+    
+    /* Component spacing fixes */
+    .selected-item-controls {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto; /* Don't grow or shrink */
+        margin-right: 3px;
+    }
+    
+    /* Make buttons smaller but still tappable */
+    .selected-item .quantity-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        margin: 0 2px;
+    }
+    
+    /* Make sure quantity is still visible */
+    .selected-item .cart-quantity {
+        min-width: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    /* Compact price display */
+    .item-price-display {
+        margin: 0 5px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    /* Handle the total and delete button */
+    .selected-item-actions {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto; /* Don't grow or shrink */
+    }
+    
+    /* Clean total price display */
+    .selected-item-total {
+        font-weight: bold;
+        margin-right: 5px;
+        font-size: 14px;
+    }
+    
+    /* Compact but tappable delete button */
+    .remove-item-btn {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: #f44336;
+        border: none;
+        padding: 0;
+    }
+    
+    .remove-item-btn i {
+        font-size: 16px;
+    }
+
+    /* Floating cart optimizations */
+    .floating-cart {
+        width: 100%;
+        max-width: 100%;
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        border-radius: 12px 12px 0 0;
+        max-height: 60vh;
+        padding: 15px 10px 10px;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Make the scrollable area more efficient */
+    .floating-cart #selected-items-list {
+        max-height: 40vh;
+        overflow-y: auto;
+        padding: 0 2px;
+        margin: 0 -2px;
+    }
+    
+    /* Improve grand total display */
+    .grand-total {
+        text-align: right;
+        font-size: 16px;
+        padding: 10px 5px;
+        margin-top: 5px;
+        background-color: #2d4a3e;
+        border-top: 1px solid #4CAF50;
+    }
+    
+    /* Clear Cart button optimization */
+    .clear-cart-btn {
+        padding: 5px 10px;
+        font-size: 13px;
+        height: auto;
+    }
+}
+
+/* Handle text overflow consistently */
+.selected-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Improve contrast for prices */
+.item-price-display, .selected-item-total {
+    color: #4CAF50;
+}
+/* Refresh button and indicators */
+.refresh-btn {
+    background-color: #333;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.refresh-btn:hover {
+    background-color: #2d4a3e;
+}
+
+/* Spinning animation for refresh */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.refresh-btn.refreshing i {
+    animation: spin 1s linear infinite;
+}
+
+/* Success indicator */
+.refresh-btn.updated {
+    background-color: #2d4a3e;
+    border-color: #4CAF50;
+}
+
+/* Error indicator */
+.refresh-btn.error {
+    background-color: rgba(244, 67, 54, 0.2);
+    border-color: #f44336;
+    color: #f44336;
+}
+
+/* Highlight updated prices */
+.selected-item.price-updated {
+    animation: highlightUpdate 2s ease;
+}
+
+@keyframes highlightUpdate {
+    0%, 100% { background-color: #2d4a3e; }
+    50% { background-color: rgba(76, 175, 80, 0.3); }
+}
+/* Expandable cart items for mobile */
+@media (max-width: 600px) {
+    /* Fixed styles for cart item names */
+    .selected-item-name {
+        /* Change these properties */
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        padding-right: 25px; /* Increase this from 15px to 25px */
+    }
+    
+    /* Indicator for expandable items */
+    .selected-item-name::after {
+        content: "▼";
+        position: absolute;
+        right: 5px; /* Change this from 0 to 5px for better spacing */
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        color: #4CAF50;
+    }
+    
+    /* Expanded state styling */
+    .selected-item.expanded {
+        height: auto;
+        padding-bottom: 8px;
+    }
+    
+    .selected-item.expanded .selected-item-name::after {
+        content: "▲";          /* Up arrow when expanded */
+    }
+    
+    .selected-item.expanded .selected-item-name:after {
+        content: "↑";
+    }
+    
+    /* Animation for expanding */
+    .selected-item {
+        transition: all 0.2s ease-out;
+    }
+}
+/* Improve mobile cart interaction */
+@media (max-width: 600px) {
+    /* Active/hover state for item name */
+    .selected-item-name:active {
+        background-color: rgba(76, 175, 80, 0.1);
+    }
+    
+    /* Fix vertical layout in expanded state */
+    .selected-item.expanded {
+        display: block;
+    }
+    
+    .selected-item.expanded .selected-item-controls {
+        margin-bottom: 8px;
+    }
+    
+    .selected-item.expanded .selected-item-actions {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    
+    /* Fix for item name width adjustments */
+    @keyframes expandWidth {
+        from { width: 130px; }
+        to { width: 100%; }
+    }
+    
+    .selected-item.expanded .selected-item-name {
+        animation: expandWidth 0.2s forwards;
+    }
+}
+/* Simple expandable cart items for mobile */
+@media (max-width: 600px) {
+    /* Basic styles for cart items */
+    .selected-item {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Default state with ellipsis */
+    .selected-item-name {
+        width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        padding-right: 15px;
+    }
+    
+    /* Indicator arrow to show it's expandable */
+    .selected-item-name::after {
+        content: "▼";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        color: #4CAF50;
+    }
+    
+    /* Expanded state */
+    .selected-item.expanded {
+        height: auto;
+        padding: 15px 12px;
+        margin-bottom: 10px;
+        background-color: #1a382e;
+    }
+    
+    .selected-item.expanded .selected-item-name {
+        width: 100%;
+        white-space: normal;
+        margin-bottom: 10px;
+        font-weight: bold;
+        overflow: visible;
+    }
+    
+    .selected-item.expanded .selected-item-name::after {
+        content: "▲";
+    }
+    
+    /* Re-arrange layout when expanded */
+    .selected-item.expanded {
+        display: block;
+    }
+    
+    .selected-item.expanded .selected-item-controls,
+    .selected-item.expanded .selected-item-actions {
+        margin-top: 8px;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    
+    .selected-item.expanded .selected-item-controls {
+        justify-content: flex-start;
+    }
+}
+/* Full-screen cart modal */
+.cart-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cart-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-modal {
+    background-color: #252525;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.cart-modal.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.cart-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.cart-modal-title {
+    color: #4CAF50;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-modal-close {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.cart-modal-body {
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(80vh - 130px);
+}
+
+.cart-modal-footer {
+    padding: 15px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Full item details in modal cart */
+.modal-cart-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #2d4a3e;
+    border-radius: 8px;
+}
+
+.modal-cart-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.modal-cart-item-name {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: normal;
+}
+
+.modal-cart-item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-cart-item-controls {
+    display: flex;
+    align-items: center;
+}
+
+.modal-cart-item-price {
+    color: #4CAF50;
+    font-weight: bold;
+}
+.selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2d4a3e;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.selected-item-row {
+    display: grid;
+    grid-template-columns: 1fr auto;  /* left: name, right: controls */
+    align-items: center;
+    gap: 20px; /* gap between the two columns */
+  }
+  
+
+.selected-item-name {
+    flex: 1;                  /* Let the name take available space */
+    position: relative;       /* Required for absolutely positioning the arrow */
+    padding-right: 20px;       /* Reserve space for the arrow */
+    overflow: visible;         /* Allow full name display */
+    text-overflow: clip;       /* No ellipsis */
+    margin-right: 5px;
+}
+
+.selected-item-name::after {
+    content: "▼";             /* The green arrow */
+    position: absolute;
+    right: 0;                 /* Align at the far right */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #4CAF50;
+}
+
+
+.selected-item-quantity,
+.selected-item-total {
+    flex: 1;
+    text-align: center;
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+}
+.selected-item-name::after {
+    display: none !important;
+}
+.selected-items-header {
+    position: relative; /* Enable absolute positioning for children */
+}
+
+.toggle-cart-arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: none; /* Shown only when scrolled down */
+    transition: transform 0.2s ease;
+    
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Ensure the cart content animates when collapsing or expanding */
+.selected-items-container #selected-items-list,
+.selected-items-container .grand-total {
+    max-height: 500px;  /* Set an approximate maximum height */
+    opacity: 1;
+    overflow: hidden;
+    /* transition: max-height 0.2s ease; */
+}
+
+/* When collapsed, reduce the max-height and fade out the content */
+.cart-collapsed #selected-items-list,
+.cart-collapsed .grand-total {
+    display: none;
+}
+
+
+/* Collapsed cart hides the items and grand total, leaving only the header visible */
+/* .cart-collapsed #selected-items-list,
+.cart-collapsed .grand-total {
+    display: none;
+} */
+
+.cart-collapsed {
+    max-height: 60px; /* Adjust as you like, e.g. 50-80px */
+    overflow: hidden;
+    transition: max-height 0.3s ease; /* Smooth collapse */
+    padding-bottom: 5px; /* Optional: reduce padding */
+}
+.floating-cart::after {
+    display: none !important;
+}
+.toggle-cart-arrow {
+    border-left: none;
+}
+.cart-edit-price-btn {
+    background-color: #2d4a3e;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+.cart-edit-price-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+.selected-item-controls-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between the controls block and the actions block */
+  }
+  
+  /* You can keep or tweak these existing rules as needed */
+  .selected-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Optionally, force a minimum width for the item name */
+  .selected-item-name {
+    min-width: 150px;
+  }
+/* Layout the cart row in one horizontal line */
+/* Make the row a simple horizontal flex container */
+/* Layout the cart row in one horizontal line */
+.selected-item-row {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Small gap between major sections (name, controls, total, dustbin) */
+    width: 100%;
+    flex-wrap: nowrap; /* Keep everything on one line */
+}
+
+/* Ensure item name is fully visible */
+.selected-item-name {
+    flex: 1; /* Take available space */
+    white-space: nowrap; /* Keep text on one line */
+    overflow: visible; /* Show full text, no truncation */
+    text-overflow: clip; /* No ellipsis */
+    margin-right: 10px; /* Space before controls */
+    font-size: 14px;
+}
+
+/* Group for minus, quantity, plus, price, and pencil */
+.selected-item-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Small gaps between controls */
+    flex-shrink: 0; /* Prevent controls from shrinking */
+}
+
+/* Smaller minus and plus buttons */
+.quantity-btn {
+    width: 20px; /* Reduced from 24px */
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background-color: #4CAF50; /* Green for plus */
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.selected-item .decrease-selected {
+    background-color: #f44336; /* Red for minus */
+}
+
+/* Smaller quantity display */
+.cart-quantity {
+    min-width: 20px; /* Reduced width */
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 1px dashed #4CAF50;
+}
+
+/* Smaller price display */
+.item-price-display {
+    font-size: 14px;
+    color: #4CAF50;
+    white-space: nowrap;
+}
+
+/* Smaller pencil button */
+.cart-edit-price-btn {
+    background-color: #2d4a3e;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    border-radius: 50%;
+    width: 18px; /* Reduced from 22px */
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-edit-price-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Equals sign positioned just left of total price */
+.equals-sign {
+    margin: 0 2px; /* Minimal spacing */
+    color: #4CAF50;
+    font-size: 14px;
+}
+
+/* Total price with reduced gap before dustbin */
+.selected-item-total {
+    font-size: 14px;
+    color: #4CAF50;
+    white-space: nowrap;
+    margin-right: 5px; /* Small gap before dustbin */
+}
+
+/* Dustbin icon aligned to the far right */
+.remove-item-btn {
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 5px; /* Small gap after total price */
+}
+
+/* Improved cart item layout - single row with proper spacing */
+.selected-item-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+/* Item name takes appropriate space but doesn't push other elements too far */
+.selected-item-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+/* Controls section (minus, quantity, plus, price, pencil) */
+.selected-item-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  margin-right: 5px;
+}
+
+/* Group for total price and trash button, pushed to the right */
+.selected-item-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Ensuring the equals sign and total are properly aligned */
+.equals-sign {
+  margin: 0 2px;
+  color: #4CAF50;
+  font-size: 14px;
+}
+
+.selected-item-total {
+  font-size: 14px;
+  font-weight: bold;
+  color: #4CAF50;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+  .selected-item-row {
+    gap: 3px;
+  }
+  
+  .selected-item-name {
+    max-width: 35%;
+    font-size: 13px;
+  }
+  
+  .selected-item .quantity-btn {
+    width: 20px;
+    height: 20px;
+    margin: 0 1px;
+  }
+  
+  .item-price-display {
+    font-size: 13px;
+  }
+  
+  .cart-edit-price-btn {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Improved cart item layout with full item name and right-aligned total section */
+.selected-item-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+/* Item name takes more available space to show full name */
+.selected-item-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+/* Controls section (minus, quantity, plus, price, pencil) next to the name */
+.selected-item-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  margin-right: auto; /* Push controls after name */
+}
+
+/* Group for total price and trash button, pushed to the far right edge */
+.selected-item-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-left: auto; /* Push to far right */
+}
+
+/* Equals sign styling */
+.equals-sign {
+  margin: 0 2px;
+  color: #4CAF50;
+  font-size: 14px;
+}
+
+/* Total price styling */
+.selected-item-total {
+  font-size: 14px;
+  font-weight: bold;
+  color: #4CAF50;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+/* Remove button styling */
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+  .selected-item-row {
+    gap: 3px;
+  }
+  
+  .selected-item-name {
+    font-size: 13px;
+    max-width: none; /* Allow full width */
+  }
+  
+  .selected-item-actions {
+    margin-left: auto; /* Ensure it's pushed to the right even on mobile */
+  }
+}
+
+/* Improved cart item row layout with proper spacing */
+.selected-item-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 3px; /* Minimal gap */
+  }
+  
+  /* Item name takes space and ALWAYS shows fully */
+  .selected-item-name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: visible; /* Show full text no matter what */
+    text-overflow: clip; /* No ellipsis */
+    margin-right: 35px; /* Much larger margin to prevent collision */
+    font-size: 14px;
+    max-width: none; /* Don't limit width */
+  }
+  
+/* Controls pushed far away from name */
+.selected-item-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex: 0 0 auto;
+    margin-left: 35px; /* Much larger spacing from name */
+    white-space: nowrap;
+  }
+  
+  /* Compact controls */
+  .quantity-btn {
+    width: 17px;
+    height: 17px;
+    font-size: 10px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+.cart-quantity {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Compact price display */
+.item-price-display {
+  font-size: 13px;
+  margin: 0 2px;
+  white-space: nowrap;
+}
+
+/* Edit price button */
+.cart-edit-price-btn {
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+
+/* Right section with equals, total and dustbin */
+.selected-item-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  
+  /* No spacing between equals and price */
+  .equals-sign {
+    margin: 0;
+    padding: 0;
+    color: #4CAF50;
+  }
+
+/* Total right next to equals */
+.selected-item-total {
+    margin: 0 2px 0 0; /* Only right margin */
+    padding: 0;
+    font-size: 14px;
+    color: #4CAF50;
+    white-space: nowrap;
+  }
+  
+  /* Dustbin very close to total */
+  .remove-item-btn {
+    margin-left: 2px;
+    padding: 0;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+/* Mobile-specific optimizations */
+@media (max-width: 600px) {
+  /* Preserve single-line layout even on small screens */
+  .selected-item-row {
+    width: 100%;
+    gap: 2px;
+  }
+  
+  /* Item name gets more emphasis on mobile */
+  .selected-item-name {
+    font-size: 13px;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  /* Tighter control dimensions on mobile */
+  .selected-item .quantity-btn {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Smaller font for price on mobile */
+  .item-price-display {
+    font-size: 12px;
+  }
+  
+  /* Ensure everything stays in one line */
+  .selected-item-qty-controls,
+  .selected-item-actions {
+    flex-shrink: 0;
+  }
+  
+  /* Keep the trash icon compact but tappable */
+  .remove-item-btn {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Core container for proper display */
+.selected-item {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  overflow: visible; /* Allow full content display */
+}
+
+/* Improved cart item row layout with proper spacing */
+.selected-item-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+/* Item name takes space and ALWAYS shows fully */
+.selected-item-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: visible; /* Show full text no matter what */
+  text-overflow: clip; /* No ellipsis */
+  margin-right: 5px; /* Reduced space after name */
+  font-size: 14px;
+}
+
+/* Controls section (minus, quantity, plus, price, pencil) */
+.selected-item-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  margin-left: auto; /* Auto margin to push to right */
+  margin-right: 10px; /* Space before total section */
+  white-space: nowrap;
+}
+
+/* Right section with equals, total and dustbin */
+.selected-item-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: auto; /* Push all the way to the right */
+}
+
+/* Equals sign positioned directly left of total */
+.equals-sign {
+  margin: 0;
+  color: #4CAF50;
+  font-size: 14px;
+}
+
+/* Total price closer to equals sign */
+.selected-item-total {
+  margin: 0 3px 0 1px; /* Minimal left margin, smaller right margin */
+  font-size: 14px;
+  color: #4CAF50;
+  white-space: nowrap;
+}
+
+/* Dustbin very close to total */
+.remove-item-btn {
+  margin-left: 0; /* Remove left margin */
+  padding: 0;
+  font-size: 16px;
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 600px) {
+  /* Preserve single-line layout even on small screens */
+  .selected-item-row {
+    gap: 2px;
+  }
+  
+  /* Even less space on mobile */
+  .selected-item-qty-controls {
+    margin-right: 5px; /* Less space on mobile */
+  }
+  
+  /* Tighter spacing on mobile */
+  .selected-item-total {
+    margin: 0 2px 0 1px; /* Even smaller margins on mobile */
+    font-size: 13px;
+  }
+}
+
+/* Improved responsive styling for very small devices */
+@media (max-width: 375px) {
+  /* Even smaller search section for tiny screens */
+  .search-section {
+    margin-bottom: 15px;
+  }
+  
+  #search-input {
+    padding: 6px 8px;
+    font-size: 14px;
+    height: 32px;
+  }
+  
+  #toggle-list-btn {
+    padding: 6px 8px;
+    font-size: 14px;
+    height: 32px;
+  }
+  
+  /* More compact cart layout for iPhone SE sized devices */
+  .selected-items-container {
+    padding: 10px;
+  }
+  
+  .clear-cart-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  /* Make item name take less space on very small screens */
+  .selected-item-name {
+    font-size: 12px; /* Smaller font */
+    margin-right: 2px; /* Almost no margin */
+    flex: 0 1 auto; /* Allow shrinking */
+    max-width: 30%; /* Limit width on tiny screens */
+  }
+  
+  /* Tighter controls section */
+  .selected-item-qty-controls {
+    gap: 1px;
+    margin-right: 3px; /* Minimal spacing */
+  }
+  
+  /* Tiny but usable buttons */
+  .selected-item .quantity-btn {
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+  
+  /* Smaller quantity display */
+  .selected-item .cart-quantity {
+    min-width: 16px;
+    font-size: 12px;
+  }
+  
+  /* Compact price display */
+  .item-price-display {
+    font-size: 11px;
+  }
+  
+  /* Smaller edit button */
+  .cart-edit-price-btn {
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+  }
+  
+  /* Compact total section */
+  .selected-item-actions {
+    margin-left: 2px; /* Minimal margin */
+  }
+  
+  .equals-sign,
+  .selected-item-total {
+    font-size: 12px;
+  }
+  
+  .selected-item-total {
+    margin: 0 1px 0 0;
+  }
+  
+  .remove-item-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+  
+  /* Smaller grand total */
+  .grand-total {
+    font-size: 16px;
+    padding: 8px 5px;
+  }
+}
+
+/* Ultra-compact layout for the smallest screens (320px) */
+@media (max-width: 320px) {
+  .app-container {
+    padding: 15px 10px;
+  }
+  
+  /* Further optimize the cart row layout */
+  .selected-item {
+    padding: 6px 8px;
+  }
+  
+  .selected-item-row {
+    gap: 1px;
+  }
+  
+  /* Minimal name display for smallest screens */
+  .selected-item-name {
+    font-size: 11px;
+    margin-right: 1px;
+    max-width: 25%;
+  }
+  
+  /* Minimal-sized controls */
+  .quantity-btn {
+    width: 15px;
+    height: 15px;
+    font-size: 9px;
+  }
+  
+  .cart-quantity {
+    min-width: 14px;
+    font-size: 11px;
+    padding: 0 1px;
+  }
+  
+  .item-price-display {
+    font-size: 10px;
+    margin: 0 1px;
+  }
+  
+  .cart-edit-price-btn {
+    width: 14px;
+    height: 14px;
+  }
+  
+  /* Optimize spacing in actions section */
+  .selected-item-actions {
+    gap: 1px;
+  }
+  
+  .selected-item-total {
+    font-size: 11px;
+  }
+  
+  .remove-item-btn {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+  
+  /* Ensure floating cart doesn't take too much space */
+  .floating-cart {
+    max-height: 65vh;
+  }
+}
+
+/* More efficient layout to prevent overflow issues on narrow screens */
+.selected-item-row {
+  display: grid;
+  grid-template-columns: minmax(80px, auto) auto auto;
+  align-items: center;
+  width: 100%;
+}
+
+/* Improved text truncation for very narrow screens */
+@media (max-width: 360px) {
+  .selected-item-row {
+    grid-template-columns: minmax(60px, 1fr) auto auto;
+  }
+  
+  /* Force item name to truncate properly */
+  .selected-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Make control buttons slightly more compressed but still tappable */
+  .selected-item-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+  
+  /* Ensure the right part stays compact but visible */
+  .selected-item-actions {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+}
+
+/* Improved floating cart styles for better scrolling */
+.floating-cart {
+    position: fixed;
+    top: auto;
+    bottom: 10px; /* Position from bottom for better mobile experience */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 760px;
+    max-height: 60vh; /* Increased for better usability */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden; /* Hide overflow at container level */
+}
+
+/* Improve the cart items list scrolling */
+.floating-cart #selected-items-list {
+    max-height: 45vh; /* Slightly less than container to allow for header/total */
+    overflow-y: auto;
+    padding-right: 5px;
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+    overscroll-behavior: contain; /* Prevent scroll chaining */
+    position: relative; /* Create stacking context */
+    z-index: 5; /* Ensure scrollable area is above other elements */
+}
+
+/* Style the scrollbar for better visibility */
+.floating-cart #selected-items-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-track {
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 10px;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 10px;
+    border: 2px solid transparent;
+}
+
+/* Add scroll indicators at top and bottom of cart */
+.scroll-indicator-top,
+.scroll-indicator-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to bottom, rgba(76, 175, 80, 0.3), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.scroll-indicator-top {
+    top: 0;
+}
+
+.scroll-indicator-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(76, 175, 80, 0.3), transparent);
+}
+
+.can-scroll-up .scroll-indicator-top {
+    opacity: 1;
+}
+
+.can-scroll-down .scroll-indicator-bottom {
+    opacity: 1;
+}
+
+/* Make the header and total "sticky" within the cart */
+.floating-cart .selected-items-header,
+.floating-cart .grand-total {
+    position: sticky;
+    background-color: #252525;
+    z-index: 6;
+}
+
+.floating-cart .selected-items-header {
+    top: 0;
+}
+
+.floating-cart .grand-total {
+    bottom: 0;
+}
+
+/* Fix for iOS */
+.ios-device .floating-cart #selected-items-list {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Add scroll hint animation for new users */
+.floating-cart.new-cart:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 60px; /* Just above the total */
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    border-radius: 50%;
+    border: 3px solid rgba(76, 175, 80, 0.5);
+    border-top-color: transparent;
+    opacity: 0;
+    animation: scrollHint 2s ease-in-out;
+}
+
+@keyframes scrollHint {
+    0%, 100% { opacity: 0; transform: translateY(0); }
+    30%, 70% { opacity: 1; transform: translateY(-10px); }
+}
+
+/* Ensure swipe doesn't conflict with scroll */
+.floating-cart {
+    touch-action: pan-y;
+}
+
+.floating-cart #selected-items-list {
+    touch-action: pan-y;
+}
+
+/* Better handle very small screens */
+@media (max-width: 375px) {
+    .floating-cart {
+        max-height: 70vh; /* Allow more space on smaller screens */
+        bottom: 0;
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .floating-cart #selected-items-list {
+        max-height: 55vh;
+    }
+}
+
+/* Fix the floating cart positioning and display for mobile */
+.floating-cart {
+    position: fixed;
+    top: auto; /* Remove top positioning */
+    bottom: 0; /* Position at bottom to prevent cut-off */
+    left: 0;
+    right: 0;
+    width: 100%; /* Full width on mobile */
+    max-width: 100%; /* Override the previous max-width */
+    transform: none; /* No transform needed with full width */
+    z-index: 1000;
+    max-height: 80vh; /* Allow it to take up to 80% of screen height */
+    overflow: hidden; /* Hide content overflow but allow scrolling in list */
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    border-radius: 12px 12px 0 0;
+    background-color: #252525;
+}
+
+/* Ensure the cart scrolls properly without cutting off content */
+.floating-cart #selected-items-list {
+    max-height: 65vh; /* Allow more space for content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    padding-bottom: 10px; /* Space at bottom of list */
+    margin-bottom: 10px; /* Additional space before grand total */
+    overscroll-behavior: contain; /* Prevent scroll chaining */
+}
+
+/* Add proper spacing for header and total in floating cart */
+.floating-cart .selected-items-header {
+    padding: 15px 15px 10px; /* Top/sides/bottom padding */
+    position: sticky;
+    top: 0;
+    background-color: #252525;
+    z-index: 1;
+    border-bottom: 1px solid #333;
+}
+
+.floating-cart .grand-total {
+    padding: 12px 15px;
+    position: sticky;
+    bottom: 0;
+    background-color: #2d4a3e;
+    margin-top: 0;
+    border-top: 1px solid #4CAF50;
+}
+
+/* Make cart appear with animation but without cutting off */
+@keyframes slideUp {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(0); }
+}
+
+.floating-cart {
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Clear indicator for drag handle on mobile */
+.floating-cart::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Ensure sizing works correctly on different devices */
+@media (min-width: 601px) {
+    .floating-cart {
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 760px;
+        border-radius: 8px;
+    }
+}
+
+/* Specific fixes for small mobile screens */
+@media (max-width: 375px) {
+    /* Optimized for iPhone SE / small devices */
+    .floating-cart .selected-items-header {
+        padding: 12px 10px 8px;
+    }
+    
+    .floating-cart #selected-items-list {
+        padding: 5px;
+        max-height: 65vh; /* Allow even more space on small screens */
+    }
+    
+    .floating-cart .grand-total {
+        padding: 10px;
+    }
+    
+    .clear-cart-btn {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Improved fix specifically for cut-off carts on mobile */
+@media (max-height: 700px) {
+    .floating-cart {
+        max-height: 85vh; /* Allow more vertical space on shorter screens */
+    }
+    
+    .floating-cart #selected-items-list {
+        max-height: 70vh;
+    }
+}
+
+/* Ultra small device optimization */
+@media (max-height: 580px) {
+    .floating-cart {
+        max-height: 90vh; /* Nearly full height on very small devices */
+    }
+    
+    .floating-cart #selected-items-list {
+        max-height: 75vh;
+    }
+    
+    /* Compact header and footer for more content space */
+    .floating-cart .selected-items-header {
+        padding: 8px 10px 6px;
+    }
+    
+    .floating-cart .grand-total {
+        padding: 8px;
+        font-size: 16px;
+    }
+}
+
+/* Modified floating cart to initially show only 4-5 items */
+.floating-cart {
+    /* ...existing code... */
+    max-height: min(80vh, 400px); /* Limit initial height to show ~4-5 items */
+    overflow: hidden;
+}
+
+/* Limit the list height to show ~4-5 items initially */
+.floating-cart #selected-items-list {
+    max-height: min(65vh, 280px); /* Show approximately 4-5 items initially */
+    overflow-y: auto;
+    scrollbar-width: thin; /* For Firefox */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    /* Add shadow at bottom to indicate more content */
+    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+}
+
+/* Make header and total sticky to keep them visible while scrolling */
+.floating-cart .selected-items-header {
+    position: sticky;
+    top: 0;
+    background-color: #252525;
+    z-index: 6;
+    border-bottom: 1px solid #333;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+.floating-cart .grand-total {
+    position: sticky;
+    bottom: 0;
+    background-color: #2d4a3e;
+    z-index: 6;
+    margin-top: 10px;
+}
+
+/* Add scroll indicator when there are more items */
+.scroll-more-indicator {
+    position: absolute;
+    bottom: 60px; /* Position above grand total */
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #4CAF50;
+    font-size: 12px;
+    padding: 5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 5;
+    background: linear-gradient(to top, #252525 30%, transparent 100%);
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 1.5s infinite;
+}
+
+.scroll-more-indicator:after {
+    content: "↓ Scroll for more items";
+    background-color: rgba(37, 37, 37, 0.8);
+    padding: 2px 10px;
+    border-radius: 10px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+/* Show indicator when content exceeds visible area */
+.has-more-items .scroll-more-indicator {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .floating-cart {
+        /* ...existing code... */
+        max-height: min(70vh, 350px); /* Slightly smaller on mobile */
+    }
+    
+    .floating-cart #selected-items-list {
+        max-height: min(55vh, 250px); /* Show ~4 items on mobile */
+    }
+}
+
+/* Improve scrollbar styling */
+.floating-cart #selected-items-list::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 10px;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-track {
+    background: rgba(37, 37, 37, 0.5);
+}
+
+/* Fix animation and positioning for the floating cart */
+.floating-cart {
+    position: fixed;
+    top: auto; /* Remove top positioning */
+    bottom: 0; /* Position at bottom to prevent cut-off */
+    left: 0;
+    right: 0;
+    width: 100%; /* Full width on mobile */
+    max-width: 100%; /* Override the previous max-width */
+    transform: none !important; /* Prevent unwanted transforms */
+    z-index: 1000;
+    max-height: 80vh; /* Allow it to take up to 80% of screen height */
+    overflow: hidden; /* Hide content overflow but allow scrolling in list */
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease; /* Only animate opacity, not position */
+    border-radius: 12px 12px 0 0;
+    background-color: #252525;
+    /* Remove slideUp animation to prevent conflicts */
+    animation: none;
+}
+
+/* Fix animation for appearing cart - use opacity only to prevent position conflicts */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.floating-cart {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Ensure desktop layout works correctly */
+@media (min-width: 601px) {
+    .floating-cart {
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%) !important; /* Allow only horizontal centering transform */
+        max-width: 760px;
+        border-radius: 8px;
+        bottom: 10px;
+    }
+}
+
+/* Improve scrollable list stability */
+.floating-cart #selected-items-list {
+    max-height: min(65vh, 280px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    /* Fix position to avoid jumping */
+    position: relative;
+    z-index: 5;
+    /* Add padding to ensure all content is visible */
+    padding-bottom: 15px;
+}
+
+/* Ensure proper scroll touch handling */
+.floating-cart #selected-items-list {
+    touch-action: pan-y; /* Allow vertical scrolling only */
+}
+
+/* Prevent parent from capturing touch events during cart scroll */
+.floating-cart.scrolling-active {
+    touch-action: none;
+}
+
+/* Fixed positioning styles for the floating cart */
+.floating-cart {
+    position: fixed;
+    top: auto; /* Remove top positioning */
+    bottom: 0 !important; /* Ensure it sticks to bottom */
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%; 
+    transform: none !important; /* Prevent unwanted transforms */
+    z-index: 1000;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 12px 12px 0 0;
+    background-color: #252525;
+}
+
+/* Limit the list height to show exactly 4 items - FIXED FOR BETTER SPACING */
+.floating-cart #selected-items-list {
+    max-height: min(65vh, 220px); /* Show exactly 4 items */
+    overflow-y: auto;
+    padding-bottom: 0 !important; /* Remove bottom padding to fix spacing */
+    margin-bottom: 0 !important; /* Remove bottom margin to fix spacing */
+    scrollbar-width: thin; /* For Firefox */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* Ensure proper padding in items for consistent spacing */
+.floating-cart .selected-item {
+    margin-bottom: 6px !important; /* Consistent spacing between items */
+    padding: 8px 10px !important;
+}
+
+/* Ensure the last item doesn't have extra margin */
+.floating-cart .selected-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Improved desktop styling for floating cart */
+@media (min-width: 601px) {
+    .floating-cart {
+        width: 90%;
+        max-width: 760px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) !important; /* Only transform horizontally */
+        border-radius: 8px 8px 0 0;
+        bottom: 0 !important;
+    }
+}
+
+/* Make sure the grand total is tight against the items */
+.floating-cart .grand-total {
+    margin-top: 0;
+    padding-top: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: #2d4a3e;
+    z-index: 6;
+}
+
+/* Fix positioning for scroll indicator */
+.scroll-more-indicator {
+    position: absolute;
+    bottom: 50px; /* Position properly above grand total */
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #4CAF50;
+    font-size: 12px;
+    padding: 5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 5;
+    background: linear-gradient(to top, #252525 30%, transparent 100%);
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Top cart limited height styling with blur effect - FIXED to avoid floating cart issues */
+.selected-items-container:not(.floating-cart) {
+    position: relative; /* To position the overlay */
+    max-height: 100%; /* Reset any max-height constraints */
+}
+
+.selected-items-container:not(.floating-cart) #selected-items-list {
+    max-height: 260px; /* Limit to approximately 4 items */
+    overflow: hidden; /* Hide overflow initially */
+    position: relative; /* For the gradient mask */
+}
+
+/* Gradient blur effect for items beyond the visible area - FIXED positioning */
+.selected-items-container:not(.floating-cart) #selected-items-list.has-more-items::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* Height of the blur effect (partially showing 5th item) */
+    background: linear-gradient(to bottom, rgba(37, 37, 37, 0.1) 0%, rgba(37, 37, 37, 0.9) 80%);
+    pointer-events: none; /* Allow clicks to go through to the expand overlay */
+    z-index: 5;
+}
+
+/* FIX: Improved overlay positioning to avoid overlap with grand total */
+.expand-cart-overlay {
+    position: absolute;
+    bottom: 50px; /* Increased to avoid overlapping grand total */
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px; /* Adjusted padding */
+    background: transparent;
+    color: #4CAF50;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 6;
+    opacity: 1; /* Changed from 0 to make it always visible */
+    transform: translateY(0); /* Reset transform to ensure visibility */
+    pointer-events: auto; /* Enable clicks */
+    height: 70px; /* Reduced height to prevent overflow */
+}
+
+/* Make the expand button more visually appealing */
+.expand-cart-button {
+    background-color: rgba(37, 37, 37, 0.85);
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #4CAF50;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Add the arrows row styling */
+.arrows-row {
+    display: none;
+}
+
+/* Add staggered animation timing to create wave effect */
+.down-arrow {
+    display: none;
+}
+
+/* FIX: Make absolutely sure the overlay never appears in floating cart */
+.floating-cart .expand-cart-overlay,
+.floating-cart #selected-items-list.has-more-items::after,
+.floating-cart .arrows-row {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* FIX: Add margin to grand total when overlay is present */
+.selected-items-container:not(.floating-cart) #selected-items-list.has-more-items + .grand-total {
+    margin-top: 40px; /* Extra space when overlay is present */
+    position: relative;
+}
+
+/* Ensure grand total transition is smooth when overlay changes */
+.grand-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 8px;
+    border-top: 2px solid #4CAF50;
+    color: #4CAF50;
+    position: relative;
+    z-index: 7;
+    background-color: #252525;
+    transition: margin-top 0.3s ease; /* Smooth transition for margin changes */
+}
+
+/* FIX: Ensure the overlay never appears in floating cart */
+.floating-cart .expand-cart-overlay,
+.floating-cart #selected-items-list.has-more-items::after {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Make the expand button more visually appealing */
+.expand-cart-button {
+    background-color: rgba(37, 37, 37, 0.85);
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #4CAF50;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Hide the arrows row completely */
+.arrows-row {
+    display: none;
+}
+
+/* Top cart limited height styling with proper expansion */
+.selected-items-container:not(.floating-cart) {
+    position: relative; /* To position the overlay */
+    max-height: 100%; /* Reset any max-height constraints */
+}
+
+.selected-items-container:not(.floating-cart) #selected-items-list {
+    max-height: 350px; /* UPDATED: Increased to show 5 items (from 260px) */
+    overflow: hidden; /* Hide overflow initially */
+    position: relative; /* For the gradient mask */
+    transition: height 0.4s ease-in-out; /* Smoother transition */
+}
+
+/* Expanded state - make sure this actually changes the height */
+.selected-items-container.expanded:not(.floating-cart) #selected-items-list {
+    max-height: 1000px; /* Much higher value to show all items */
+    overflow-y: auto; /* Enable scrolling if many items */
+}
+
+/* Make blur effect only apply when not expanded */
+.selected-items-container:not(.floating-cart):not(.expanded) #selected-items-list.has-more-items::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* Height of the blur effect */
+    background: linear-gradient(to bottom, rgba(37, 37, 37, 0.1) 0%, rgba(37, 37, 37, 0.9) 80%);
+    pointer-events: none; /* Allow clicks to go through to the expand overlay */
+    z-index: 5;
+}
+
+/* Specifically remove the blur effect when expanded */
+.selected-items-container.expanded #selected-items-list.has-more-items::after {
+    display: none !important;
+}
+
+/* Expanded state - make sure this actually changes the height and overflow behavior */
+.selected-items-container.expanded:not(.floating-cart) #selected-items-list {
+    max-height: 1000px; /* Much higher value to show all items */
+    overflow-y: auto !important; /* Force enable scrolling if many items */
+}
+
+/* Improve the collapse button styling */
+.collapse-cart-button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(37, 37, 37, 0.85);
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #4CAF50;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Fix issues with cart overlay messages - ensure proper isolation */
+.expand-cart-overlay {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    background: transparent;
+    color: #4CAF50;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 6;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    height: 70px;
+}
+
+/* Critical: Never show top cart overlay in floating cart */
+.floating-cart .expand-cart-overlay,
+.floating-cart .collapse-cart-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Critical: Never show floating cart scroll indicator in top cart */
+.selected-items-container:not(.floating-cart) .scroll-more-indicator {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Force isolation of cart states to prevent message bleeding */
+.top-cart-has-more-items::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, rgba(37, 37, 37, 0.1) 0%, rgba(37, 37, 37, 0.9) 80%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.floating-cart .top-cart-has-more-items::after {
+    display: none !important;
+}
+
+/* Improve scroll indicator to make it clearly different from expand overlay */
+.scroll-more-indicator {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #4CAF50;
+    font-size: 12px;
+    padding: 5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 7; /* Higher than top cart overlay */
+    background: linear-gradient(to top, #252525 30%, transparent 100%);
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 1.5s infinite;
+}
+
+/* Always ensure clean visibility state when switching cart modes */
+.selected-items-container.view-state-reset .expand-cart-overlay,
+.selected-items-container.view-state-reset .scroll-more-indicator,
+.selected-items-container.view-state-reset .collapse-cart-button {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Improved top cart styling for better expansion transition */
+.selected-items-container:not(.floating-cart) #selected-items-list {
+    max-height: 260px; /* Limit to approximately 4 items when collapsed */
+    overflow: hidden; /* Hide overflow initially */
+    position: relative; /* For the gradient mask */
+    transition: height 0.4s ease-in-out; /* Smoother transition */
+}
+
+/* Expanded state - better transition for full height */
+.selected-items-container.expanded:not(.floating-cart) #selected-items-list {
+    max-height: none; /* Show all items without limitation */
+    overflow: visible !important; /* Force visibility */
+    height: auto !important; /* Let it take natural height */
+}
+
+/* Improved animation for expand/collapse buttons */
+.expand-cart-button, .collapse-cart-button {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.expand-cart-button:hover, .collapse-cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(45, 74, 62, 0.95);
+}
+
+/* Position the floating cart at the bottom of the screen */
+.floating-cart.bottom-floating-cart {
+    position: fixed;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none !important;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Desktop styling for bottom floating cart */
+@media (min-width: 601px) {
+    .floating-cart.bottom-floating-cart {
+        width: 90%;
+        max-width: 760px;
+        left: 50%;
+        transform: translateX(-50%) !important;
+        border-radius: 12px 12px 0 0;
+        bottom: 0 !important;
+        margin-bottom: 0;
+    }
+}
+
+/* Improve drag indicator for bottom floating cart */
+.floating-cart.bottom-floating-cart::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Add padding to ensure content isn't cut off on iOS devices with home indicator */
+@supports (-webkit-touch-callout: none) {
+    .floating-cart.bottom-floating-cart {
+        padding-bottom: env(safe-area-inset-bottom, 10px);
+    }
+}
+
+/* Improved top cart styling for better expansion transition */
+.selected-items-container:not(.floating-cart) #selected-items-list {
+    max-height: 260px; /* Limit to approximately 4 items when collapsed */
+    overflow: hidden; /* Hide overflow initially */
+    position: relative; /* For the gradient mask */
+    transition: height 0.4s ease-in-out; /* Smoother transition */
+}
+
+/* Expanded state - better transition for full height */
+.selected-items-container.expanded:not(.floating-cart) #selected-items-list {
+    max-height: none; /* Show all items without limitation */
+    overflow: visible !important; /* Force visibility */
+    height: auto !important; /* Let it take natural height */
+}
+
+/* Improved animation for expand/collapse buttons */
+.expand-cart-button, .collapse-cart-button {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.expand-cart-button:hover, .collapse-cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(45, 74, 62, 0.95);
+}
+
+/* Position the floating cart at the bottom of the screen */
+.floating-cart.bottom-floating-cart {
+    position: fixed;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none !important;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Desktop styling for bottom floating cart */
+@media (min-width: 601px) {
+    .floating-cart.bottom-floating-cart {
+        width: 90%;
+        max-width: 760px;
+        left: 50%;
+        transform: translateX(-50%) !important;
+        border-radius: 12px 12px 0 0;
+        bottom: 0 !important;
+        margin-bottom: 0;
+    }
+}
+
+/* Improve drag indicator for bottom floating cart */
+.floating-cart.bottom-floating-cart::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Add padding to ensure content isn't cut off on iOS devices with home indicator */
+@supports (-webkit-touch-callout: none) {
+    .floating-cart.bottom-floating-cart {
+        padding-bottom: env(safe-area-inset-bottom, 10px);
+    }
+}
+
+/* ...existing code... */
+
+/* Top cart styling to preserve exactly 5 items in collapsed state */
+.selected-items-container:not(.floating-cart):not(.expanded) #selected-items-list {
+    overflow: hidden !important; /* Force hidden overflow when collapsed */
+}
+
+/* Make sure the manual height calculation isn't overridden */
+.selected-items-container:not(.floating-cart) #selected-items-list.has-more-items {
+    overflow: hidden !important; /* Ensure overflow stays hidden */
+}
+
+/* Improved styling to ensure blur effect works correctly */
+.selected-items-container:not(.floating-cart):not(.expanded) #selected-items-list.has-more-items::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, rgba(37, 37, 37, 0.01) 0%, rgba(37, 37, 37, 0.9) 80%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* ...existing code... */
+
+/* Fixed positioning styles for the floating cart - improved for collapsed state */
+.floating-cart {
+    position: fixed;
+    top: auto;
+    bottom: 0 !important; /* Always stick to the bottom */
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none !important;
+    z-index: 1000;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 12px 12px 0 0;
+    background-color: #252525;
+    margin-bottom: 0 !important; /* Ensure no margin at bottom */
+    padding-bottom: 0 !important; /* No padding at bottom */
+}
+
+/* Ensure the collapsed cart sits tight against the bottom */
+.cart-collapsed {
+    max-height: 60px; /* Height of just the header */
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-bottom: 0 !important; /* No bottom padding when collapsed */
+    margin-bottom: 0 !important; /* No bottom margin when collapsed */
+    position: fixed; /* Force fixed positioning */
+    bottom: 0 !important; /* Force to bottom */
+}
+
+/* Ensure header is visible in collapsed state with proper spacing */
+.floating-cart .selected-items-header {
+    padding: 15px 15px 10px;
+    position: sticky;
+    top: 0;
+    background-color: #252525;
+    z-index: 6;
+    border-bottom: 1px solid #333;
+    margin-bottom: 5px;
+}
+
+/* Adjust cart header when collapsed to use minimal space */
+.cart-collapsed .selected-items-header {
+    padding: 10px 15px !important;
+    margin-bottom: 0 !important;
+    border-bottom: none;
+}
+
+/* Improve desktop styling for floating cart */
+@media (min-width: 601px) {
+    .floating-cart {
+        width: 90%;
+        max-width: 760px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) !important; /* Only transform horizontally */
+        border-radius: 8px 8px 0 0;
+        bottom: 0 !important; /* Ensure it stays at bottom */
+    }
+    
+    /* Even in desktop view, ensure collapsed cart is at bottom */
+    .floating-cart.cart-collapsed {
+        bottom: 0 !important;
+    }
+}
+
+/* Ensure toggle cart arrow is properly positioned */
+.toggle-cart-arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: inline-block; /* Always show in floating cart */
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+    padding-top: 3px; /* Center the arrow vertically */
+}
+
+/* ...existing code... */
+
+/* Improved spacing for selected-items-header in floating cart */
+.floating-cart .selected-items-header {
+    padding: 8px 15px 5px !important; /* Reduced top/bottom padding */
+    position: sticky;
+    top: 0;
+    background-color: #252525;
+    z-index: 6;
+    border-bottom: 1px solid #333;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Keep items spaced out */
+}
+
+/* Improve toggle cart arrow positioning and spacing */
+.toggle-cart-arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 4px;
+    width: 26px; /* Slightly smaller */
+    height: 26px; /* Slightly smaller */
+    cursor: pointer;
+    font-size: 16px; /* Smaller font size */
+    display: inline-block;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+    line-height: 26px; /* Center the arrow vertically */
+    padding: 0; /* Remove padding */
+}
+
+/* Further improved spacing for collapsed state */
+.cart-collapsed .selected-items-header {
+    padding: 5px 15px !important; /* Even less padding when collapsed */
+    margin-bottom: 0 !important;
+    border-bottom: none;
+    height: 40px; /* Fixed height for collapsed state */
+}
+
+/* Ensure the clear cart button doesn't have extra space */
+.floating-cart .clear-cart-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    height: 26px; /* Match height with toggle arrow */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fix floating cart drag indicator position */
+.floating-cart.bottom-floating-cart::before {
+    top: 4px; /* Move closer to top */
+    height: 3px; /* Make it a bit thinner */
+}
+
+/* ...existing code... */
+
