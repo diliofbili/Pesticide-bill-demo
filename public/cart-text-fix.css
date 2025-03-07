@@ -1,0 +1,58 @@
+/* 
+ * Cart Text Wrapping Fix
+ * Ensures item names in cart display properly:
+ * - Short names stay on a single line
+ * - Long names wrap to a second line only when necessary
+ */
+
+/* Fix for the cart item name text wrapping issue */
+.selected-item-name {
+  /* Basic layout properties */
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 45%;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+  
+  /* Critical text handling properties */
+  white-space: normal !important;       /* Allow text to wrap when needed */
+  overflow-wrap: break-word !important; /* Break words to prevent overflow */
+  word-break: break-word !important;    /* Break words at appropriate points */
+  hyphens: none !important;             /* Don't use hyphens */
+  
+  /* Visual adjustments for better readability */
+  line-height: 1.2 !important;          /* Tighter line spacing for wrapped text */
+  font-size: 14px !important;           /* Consistent font size */
+}
+
+/* When text name is expanded on click */
+.selected-item-name.expanded {
+  position: absolute;
+  z-index: 100;
+  background-color: #2d4a3e;
+  padding: 8px;
+  border-radius: 4px;
+  max-width: 85%;
+  width: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  .selected-item-name {
+    max-width: 40%; /* Slightly narrower on mobile */
+    font-size: 13px !important;
+    margin-right: 8px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 375px) {
+  .selected-item-name {
+    max-width: 35%;
+    font-size: 12px !important;
+  }
+}
