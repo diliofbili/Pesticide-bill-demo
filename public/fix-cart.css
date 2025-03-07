@@ -1,0 +1,257 @@
+/* Clean floating cart implementation without gray line */
+
+/* Override the floating cart header styling to reduce the top spacing */
+.floating-cart .selected-items-header {
+    border: none !important;
+    border-bottom: none !important;
+    position: relative;
+    padding: 3px 15px 5px !important;  /* Keeping the reduced padding */
+    background-color: #252525;
+    display: flex !important; /* Ensure flexbox layout */
+    align-items: center !important; /* Vertically center items */
+    justify-content: space-between !important; /* Revert to space-between layout */
+    min-height: 0 !important; /* Allow header to shrink to content */
+    gap: 0 !important; /* Remove gap */
+}
+
+/* Fix the collapsed state styling - with clear cart on left and arrow centered */
+.floating-cart.cart-collapsed .selected-items-header {
+    padding: 1px 15px !important;
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+    justify-content: space-between !important; /* Keep space-between for left alignment */
+    position: relative !important; /* Enable positioning for absolute elements */
+}
+
+/* Position the toggle arrow in the center when collapsed */
+.floating-cart.cart-collapsed .toggle-cart-arrow {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* Center horizontally */
+    margin: 0 !important;
+}
+
+/* Direct positioning of the toggle arrow button to eliminate extra space - with original color restored */
+.floating-cart .toggle-cart-arrow {
+    display: inline-flex !important; /* Use flex for better alignment */
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important; /* Remove any padding */
+    margin: 0 !important; /* Remove any margin */
+    height: 24px !important; /* Fixed height */
+    width: 24px !important; /* Fixed width */
+    line-height: 24px !important; /* Match height for vertical centering */
+    font-size: 14px !important; /* Adjusted size */
+    text-align: center !important;
+    background-color: #4CAF50 !important; /* Restored green background */
+    color: white !important; /* Ensure white text */
+    border-radius: 4px !important; /* Keep the rounded corners */
+    border: none !important;
+}
+
+/* Ensure cart sits properly at bottom of screen */
+.floating-cart.bottom-floating-cart {
+    bottom: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Force no gray line in any state */
+.floating-cart::before,
+.floating-cart::after,
+.floating-cart .selected-items-header::before,
+.floating-cart .selected-items-header::after {
+    display: none !important;
+}
+
+/* Make sure items list shows exactly 4 items with scroll */
+.floating-cart #selected-items-list {
+    margin-top: 0 !important;
+    padding-top: 5px !important;
+    max-height: 220px !important; /* Height of approximately 4 items */
+    overflow-y: auto !important; /* Force scrolling */
+    -webkit-overflow-scrolling: touch !important; /* Smooth scrolling on iOS */
+    overscroll-behavior: contain !important; /* Prevent scroll chaining */
+    position: relative !important; /* Ensure proper stacking context */
+    z-index: 5 !important; /* Higher z-index to ensure visibility */
+    touch-action: pan-y !important; /* CRITICAL: Explicitly allow vertical touch scrolling */
+    pointer-events: auto !important; /* Allow touch events */
+    /* Remove any transforms or transitions that might interfere with scrolling */
+    transform: none !important;
+    transition: none !important;
+    user-select: none !important; /* Prevent selection during scroll */
+}
+
+/* Ensure proper scrollbar styling */
+.floating-cart #selected-items-list::-webkit-scrollbar {
+    width: 5px !important;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-track {
+    background: rgba(30, 30, 30, 0.5) !important;
+    border-radius: 10px !important;
+}
+
+.floating-cart #selected-items-list::-webkit-scrollbar-thumb {
+    background-color: #4CAF50 !important;
+    border-radius: 10px !important;
+}
+
+/* Fix items layout to ensure they're visible when scrolling */
+.floating-cart .selected-item {
+    position: relative !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    z-index: 2 !important;
+    margin-bottom: 8px !important; /* Consistent spacing between items */
+    padding: 8px 10px !important; /* Consistent padding */
+    touch-action: pan-y !important; /* Allow scrolling over items */
+    pointer-events: auto !important; /* Ensure touch events work */
+}
+
+/* Ensure last item doesn't have extra margin */
+.floating-cart .selected-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Ensure proper touch behavior for scrolling */
+.floating-cart #selected-items-list {
+    touch-action: pan-y !important; /* Allow vertical touch scrolling */
+}
+
+/* Fix max height specifically for mobile */
+@media (max-width: 600px) {
+    .floating-cart #selected-items-list {
+        max-height: 200px !important; /* Slightly shorter on mobile but still ~4 items */
+        -webkit-overflow-scrolling: touch !important; /* Reinforcing iOS momentum scroll */
+        overflow-y: scroll !important; /* Force scroll mode on mobile */
+        position: relative !important; /* Ensure proper positioning */
+    }
+    
+    /* Make sure the cart doesn't take up too much screen height but allows scrolling */
+    .floating-cart {
+        max-height: 80vh !important;
+        position: fixed !important; /* Ensure fixed positioning */
+        overflow: hidden !important; /* Hide container overflow but allow list scrolling */
+    }
+
+    .floating-cart .selected-items-header {
+        padding: 1px 15px !important; /* Even less padding on mobile */
+        height: auto !important; /* Natural height based on content */
+    }
+    
+    .floating-cart .toggle-cart-arrow {
+        height: 20px !important; /* Slightly smaller on mobile */
+        width: 20px !important;
+        line-height: 20px !important;
+    }
+    
+    /* Ensure the clear cart button aligns properly with reduced space */
+    .floating-cart .clear-cart-btn {
+        padding: 3px 8px !important; /* Smaller padding */
+        font-size: 13px !important; /* Smaller font */
+        margin: 0 !important; /* No margin */
+    }
+}
+
+/* Improved styling for the scroll indicator - COMPLETELY TRANSPARENT */
+.scroll-more-indicator {
+    position: absolute !important;
+    bottom: 50px !important; /* Position above grand total */
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    color: #4CAF50 !important;
+    padding: 5px !important;
+    pointer-events: none !important;
+    z-index: 50 !important; /* Make sure it's above everything */
+    background: none !important; /* Remove gradient background completely */
+    height: 30px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 12px !important;
+}
+
+/* Always show scroll indicator when floating cart has more than 4 items */
+.floating-cart.has-more-items .scroll-more-indicator {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Completely clean text with no styling at all */
+.scroll-more-indicator:after {
+    content: "↓ Scroll to view items" !important;
+    background: none !important; /* No background */
+    padding: 3px 10px !important;
+    border-radius: 0 !important; /* No border radius */
+    white-space: nowrap !important;
+    font-weight: bold !important;
+    box-shadow: none !important; /* No shadow */
+    border: none !important; /* No border */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; /* Subtle text shadow for better visibility */
+}
+
+/* Add subtle bounce animation to draw attention */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
+
+.scroll-more-indicator {
+    animation: bounce 1.5s infinite !important;
+}
+
+/* Enhanced styling for the "No items selected" message - prominent and centered */
+.no-items {
+    text-align: center;
+    font-size: 20px !important; /* Larger font size */
+    color: #4CAF50;
+    padding: 30px 10px !important; /* More vertical padding */
+    margin: 15px 0 !important;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px !important; /* Ensure it takes up space even when empty */
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 8px;
+}
+
+/* Make the message in the floating cart slightly different */
+.floating-cart .no-items {
+    font-size: 18px !important;
+    padding: 20px 10px !important;
+    margin: 5px 0 !important;
+    min-height: 80px !important;
+}
+
+/* CRITICAL MOBILE FIX: For Safari and Chrome on iOS/Android */
+@supports (-webkit-touch-callout: none) {
+    .floating-cart #selected-items-list {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: scroll !important; /* Force scroll on iOS */
+        margin-bottom: 5px !important; /* Add space to ensure all content is visible */
+    }
+}
+
+/* Prevent parent containers from blocking scroll events */
+.selected-items-container {
+    pointer-events: auto !important;
+}
+
+/* Reset body/html fixed position that might block scrolling */
+html, body {
+    position: static !important; /* Remove fixed positioning if present */
+    overflow-y: auto !important; /* Allow vertical scrolling */
+    touch-action: auto !important; /* Allow all touch actions */
+    height: auto !important; /* Allow auto height */
+    /* The fixed position in your style.css was likely blocking scrolling */
+}
+
+.app-container {
+    height: auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
