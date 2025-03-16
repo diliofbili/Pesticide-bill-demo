@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pesticide Calculator</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <!-- Add our extra CSS fixes -->
+    <link rel="stylesheet" href="extra.css">
+    <!-- Add the fix-cart CSS file for clean floating cart -->
+    <link rel="stylesheet" href="fix-cart.css">
+    <!-- Add the cart text wrapping fix -->
+    <link rel="stylesheet" href="cart-text-fix.css">
+    <!-- Add smooth cart interactions CSS -->
+    <link rel="stylesheet" href="smooth-cart.css">
+    <!-- Add instant item removal CSS -->
+    <link rel="stylesheet" href="instant-remove.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://apis.google.com/js/api.js"></script>
+    
+    <!-- Direct style to hide customer info container when scrolling -->
+    <style>
+        /* Hide customer info container when scrolling */
+        .customer-info-container {
+            transition: none !important;
+        }
+        
+        body.is-scrolling .customer-info-container {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preload script to ensure saved bills icon works immediately -->
+    <script>
+        // Immediate initialization of saved bills icon
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedBillsIcon = document.getElementById('saved-bills-icon');
+            if (savedBillsIcon) {
+                console.log('Preloading saved bills functionality');
+                
+                // Force the icon to be clickable
+                savedBillsIcon.style.pointerEvents = 'auto';
+                savedBillsIcon.style.cursor = 'pointer';
+                
+                // Add direct click handler that doesn't rely on event delegation
+                savedBillsIcon.onclick = function(e) {
+                    console.log('Saved bills icon clicked (direct handler)');
+                    
+                    // Get saved bills overlay
+                    const savedBillsOverlay = document.getElementById('saved-bills-overlay');
+                    if (savedBillsOverlay) {
+                        // Make it appear as a full page
+                        savedBillsOverlay.style.position = 'fixed';
+                        savedBillsOverlay.style.top = '0';
+                        savedBillsOverlay.style.left = '0';
+                        savedBillsOverlay.style.right = '0';
+                        savedBillsOverlay.style.bottom = '0';
+                        savedBillsOverlay.style.width = '100%';
+                        savedBillsOverlay.style.height = '100%';
+                        savedBillsOverlay.style.display = 'block';
+                        savedBillsOverlay.style.opacity = '1';
+                        savedBillsOverlay.style.visibility = 'visible';
+                        savedBillsOverlay.style.zIndex = '2000';
+                        savedBillsOverlay.style.backgroundColor = '#1e1e1e';
+                        
+                        // Add active class
+                        savedBillsOverlay.classList.add('active');
+                        
+                        // Prevent body scrolling when overlay is open
+                        document.body.style.overflow = 'hidden';
+                        
+                        // Get saved bills from localStorage
+                        const savedBills = JSON.parse(localStorage.getItem('savedBills') || '[]');
+                        
+                        // Display saved bills
+                        const savedBillsList = document.getElementById('saved-bills-list');
+                        if (savedBillsList) {
+                            // Clear previous bills
+                            savedBillsList.innerHTML = '';
+                            
+                            if (!savedBills || savedBills.length === 0) {
+                                // Show no bills message
+                                const noBillsMessage = document.createElement('div');
+                                noBillsMessage.className = 'no-bills-message';
+                                noBillsMessage.textContent = 'No saved bills found';
+                                savedBillsList.appendChild(noBillsMessage);
+                            } else {
+                                // Display bills
+                                if (typeof window.displaySavedBills === 'function') {
+                                    window.displaySavedBills(savedBills);
+                                }
+                            }
+                        }
+                        
+                        // Initialize search functionality
+                        const savedBillsSearchBtn = document.getElementById('saved-bills-search-btn');
+                        const savedBillsSearchInput = document.getElementById('saved-bills-search-input');
+                        
+                        if (savedBillsSearchBtn && savedBillsSearchInput) {
+                            // Ensure search button works
+                            savedBillsSearchBtn.onclick = function() {
+                                const query = savedBillsSearchInput.value.trim();
+                                console.log('Search button clicked with query:', query);
+                                
+                                // Call the global search function if available
+                                if (typeof window.searchBills === 'function') {
+                                    window.searchBills(query);
+                                } else {
+                                    // Fallback implementation
+                                    if (!query) {
+                                        // If query is empty, show all bills
+                                        if (typeof window.displaySavedBills === 'function') {
+                                            window.displaySavedBills(savedBills);
+                                        }
+                                        return;
+                                    }
+                                    
+                                    // Filter bills by customer name
+                                    const lowerQuery = query.toLowerCase();
+                                    const filteredBills = savedBills.filter(bill => 
+                                        bill.customerName && bill.customerName.toLowerCase().includes(lowerQuery)
+                                    );
+                                    
+                                    // Display filtered bills
+                                    if (typeof window.displaySavedBills === 'function') {
+                                        window.displaySavedBills(filteredBills);
+                                    }
+                                }
+                            };
+                            
+                            // Add input event listener for real-time search
+                            savedBillsSearchInput.oninput = function() {
+                                const query = this.value.trim();
+                                if (typeof window.searchBills === 'function') {
+                                    window.searchBills(query);
+                                }
+                            };
+                        }
+                    }
+                    
+                    // If the global function exists, use it after a short delay
+                    setTimeout(function() {
+                        if (typeof window.openSavedBillsPage === 'function') {
+                            window.openSavedBillsPage();
+                        }
+                    }, 100);
+                };
+            }
+        });
+    </script>
+    
+    <!-- Customer Information Feature - Moved outside app-container for better positioning -->
+    <div class="customer-info-container">
+        <div class="saved-bills-icon" id="saved-bills-icon">
+            <i class="fas fa-save"></i>
+        </div>
+        <div class="customer-name-icon" id="customer-name-icon">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="customer-name-display" id="customer-name-display">
+            <span class="customer-name-text" id="customer-name-text"></span>
+            <span class="customer-name-clear" id="customer-name-clear">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+    </div>
+    
+    <!-- Horizontal separator line -->
+    <div class="customer-info-separator"></div>
+    
+    <div class="app-container">
+        <header>
+            <!-- <h1>Pesticide Calculator</h1> -->
+        </header>
+        <!-- Cart section first -->
+        <div class="selected-items-container">
+            <div class="selected-items-header">
+                <button id="toggle-cart-arrow" class="toggle-cart-arrow">↓</button>
+            </div>
+            <div id="selected-items-list"></div>
+            <div class="grand-total">
+                <div class="button-group">
+                    <button id="clear-cart-btn" class="clear-cart-btn">Clear</button><button id="confirm-bill-btn" class="confirm-bill-btn"><i class="fas fa-check"></i></button>
+                </div>
+                <span class="total-text">Grand Total = ₹<span id="grand-total-value">0</span></span>
+            </div>
+            <!-- The expand overlay will be inserted here dynamically -->
+        </div>
+        
+        <!-- Search section below cart -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Search Pesticide...">
+            <button id="toggle-list-btn">Hide List</button>
+            <button id="refresh-btn" class="refresh-btn" title="Refresh data">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        
+        <!-- Add spacer div to maintain layout when search bar is fixed -->
+        <div class="search-spacer"></div>
+        
+        <div class="all-items-container" id="all-items-container">
+            <div id="items-list" class="items-list"></div>
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>Loading pesticides data...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Customer Information Modal -->
+    <div class="customer-modal-overlay" id="customer-modal-overlay">
+        <div class="customer-modal" id="customer-modal">
+            <div class="customer-modal-header">
+                <div class="customer-modal-title">Enter Customer Information</div>
+                <button class="customer-modal-close" id="customer-modal-close">&times;</button>
+            </div>
+            <div class="customer-modal-warning" id="customer-modal-warning">
+                Please enter customer name to continue
+            </div>
+            <div class="customer-modal-body">
+                <div class="customer-modal-input-group">
+                    <label class="customer-modal-label" for="customer-name-input">Customer Name</label>
+                    <input type="text" class="customer-modal-input" id="customer-name-input" placeholder="Enter customer name">
+                </div>
+                <div class="customer-modal-input-group">
+                    <label class="customer-modal-label" for="customer-date-input">Date</label>
+                    <input type="date" class="customer-modal-input" id="customer-date-input">
+                </div>
+            </div>
+            <div class="customer-modal-buttons">
+                <button class="customer-modal-button cancel" id="customer-modal-cancel">Cancel</button>
+                <button class="customer-modal-button confirm" id="customer-modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bill Confirmation Modal -->
+    <div class="bill-modal-overlay" id="bill-modal-overlay">
+        <div class="bill-modal" id="bill-modal">
+            <div class="bill-modal-header">
+                <div class="bill-modal-title">Confirm Bill</div>
+                <button class="bill-modal-close" id="bill-modal-close">&times;</button>
+            </div>
+            <div class="bill-modal-body">
+                <div class="bill-info-item">
+                    <div class="bill-info-label">Customer Name</div>
+                    <div class="bill-info-value" id="bill-customer-name">-</div>
+                </div>
+                <div class="bill-info-item">
+                    <div class="bill-info-label">Date</div>
+                    <div class="bill-info-value" id="bill-date">-</div>
+                </div>
+                <div class="bill-info-item">
+                    <div class="bill-info-label">Total Amount</div>
+                    <div class="bill-info-value" id="bill-total-amount">₹0</div>
+                </div>
+                
+                <div class="bill-items-toggle">
+                    <span class="bill-items-toggle-label">View Items</span>
+                    <label class="bill-items-toggle-switch">
+                        <input type="checkbox" id="bill-items-toggle-input" onchange="this.blur();" onclick="if(this.checked) { setTimeout(function() { document.getElementById('bill-items-list').style.display = 'block'; document.getElementById('bill-items-list').classList.add('visible'); }, 10); }">
+                        <span class="bill-items-toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="bill-items-list" id="bill-items-list">
+                    <!-- Items will be populated dynamically -->
+                </div>
+            </div>
+            <div class="bill-modal-buttons">
+                <button class="bill-modal-button cancel" id="bill-modal-cancel">Cancel</button>
+                <button class="bill-modal-button confirm" id="bill-modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Message Container -->
+    <div class="toast-container">
+        <div class="toast-message" id="toast-message">Bill saved successfully</div>
+    </div>
+    
+    <!-- Saved Bills Page -->
+    <div class="saved-bills-overlay" id="saved-bills-overlay">
+        <div class="saved-bills-page">
+            <div class="saved-bills-header">
+                <h2>Saved Bills</h2>
+                <button class="saved-bills-close" id="saved-bills-close" style="touch-action: manipulation;">&times;</button>
+            </div>
+            
+            <div class="saved-bills-search">
+                <input type="text" id="saved-bills-search-input" placeholder="Search bills...">
+                <button id="saved-bills-search-btn" onclick="if(window.searchBills) window.searchBills(document.getElementById('saved-bills-search-input').value);"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="saved-bills-list" id="saved-bills-list">
+                <!-- Bills will be populated here dynamically -->
+                <div class="no-bills-message">No saved bills found</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bill Details Popup -->
+    <div class="bill-popup-overlay" id="bill-popup-overlay">
+        <div class="bill-popup" id="bill-popup">
+            <div class="bill-popup-header">
+                <div class="bill-popup-title" id="bill-popup-title">Bill Details</div>
+                <button class="bill-popup-close" id="bill-popup-close">&times;</button>
+            </div>
+            <div class="bill-popup-body" id="bill-popup-body">
+                <!-- Content will be dynamically generated in JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add our JavaScript files -->
+    <script src="app.js"></script>
+    <script src="customer-info.js"></script>
+    <script src="bill-popup.js"></script>
+    <script src="cart-name-fix.js"></script>
+    <script src="edit-button-fix.js"></script>
+    
+    <!-- Direct script to hide customer info container when scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const customerInfoContainer = document.querySelector('.customer-info-container');
+            
+            // Initial state - show icons
+            document.documentElement.setAttribute('data-scroll', '0');
+            
+            // Simple scroll handler - hide when scrolling down, show when at top
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 0) {
+                    // Hide when scrolled down
+                    document.documentElement.setAttribute('data-scroll', '1');
+                } else {
+                    // Show when at the top
+                    document.documentElement.setAttribute('data-scroll', '0');
+                }
+            }, { passive: true });
+        });
+    </script>
+    
+    <!-- Fix for saved bills scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the saved bills overlay and list
+            const savedBillsOverlay = document.getElementById('saved-bills-overlay');
+            const savedBillsList = document.getElementById('saved-bills-list');
+            
+            if (savedBillsOverlay && savedBillsList) {
+                // Prevent default touch behavior on the saved bills list
+                savedBillsList.addEventListener('touchmove', function(e) {
+                    e.stopPropagation();
+                }, { passive: false });
+            }
+        });
+    </script>
+    
+    <!-- Fix for item selection modal scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fix for item selection modal scrolling
+            document.addEventListener('click', function(e) {
+                if (e.target && (e.target.classList.contains('add-new-item-btn') || e.target.closest('.add-new-item-btn'))) {
+                    setTimeout(function() {
+                        const itemsListContainer = document.getElementById('items-list-container');
+                        if (itemsListContainer) {
+                            // Add touch event handler to fix scrolling
+                            itemsListContainer.addEventListener('touchmove', function(e) {
+                                e.stopPropagation();
+                            }, { passive: false });
+                            
+                            // Force a small scroll to enable scrolling up
+                            itemsListContainer.scrollTop = 1;
+                        }
+                    }, 500);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Fix for edit bill items list scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fix for edit bill items list scrolling
+            document.addEventListener('click', function(e) {
+                if (e.target && (e.target.classList.contains('bill-popup-btn') && e.target.classList.contains('edit'))) {
+                    setTimeout(function() {
+                        const editBillItemsList = document.getElementById('edit-bill-items-list');
+                        if (editBillItemsList) {
+                            // Add touch event handler to fix scrolling
+                            editBillItemsList.addEventListener('touchmove', function(e) {
+                                e.stopPropagation();
+                            }, { passive: false });
+                            
+                            // Force a small scroll to enable scrolling up
+                            editBillItemsList.scrollTop = 1;
+                        }
+                    }, 500);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Fix for saved bills search button -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fix for saved bills search button
+            const savedBillsSearchBtn = document.getElementById('saved-bills-search-btn');
+            const savedBillsSearchInput = document.getElementById('saved-bills-search-input');
+            
+            if (savedBillsSearchBtn && savedBillsSearchInput) {
+                // Add direct click handler to search button
+                savedBillsSearchBtn.addEventListener('click', function() {
+                    const query = savedBillsSearchInput.value.trim();
+                    console.log('Search button clicked with query:', query);
+                    
+                    // Call the global search function if available
+                    if (typeof window.searchBills === 'function') {
+                        window.searchBills(query);
+                    } else {
+                        console.error('searchBills function not found');
+                        
+                        // Fallback implementation
+                        const savedBills = JSON.parse(localStorage.getItem('savedBills') || '[]');
+                        
+                        if (!query) {
+                            // If query is empty, show all bills
+                            if (typeof window.displaySavedBills === 'function') {
+                                window.displaySavedBills(savedBills);
+                            }
+                            return;
+                        }
+                        
+                        // Filter bills by customer name
+                        const lowerQuery = query.toLowerCase();
+                        const filteredBills = savedBills.filter(bill => 
+                            bill.customerName && bill.customerName.toLowerCase().includes(lowerQuery)
+                        );
+                        
+                        // Display filtered bills
+                        if (typeof window.displaySavedBills === 'function') {
+                            window.displaySavedBills(filteredBills);
+                        }
+                    }
+                });
+                
+                // Add input event listener for real-time search as you type
+                savedBillsSearchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    console.log('Search input changed to:', query);
+                    
+                    // Call the global search function if available
+                    if (typeof window.searchBills === 'function') {
+                        window.searchBills(query);
+                    } else {
+                        console.error('searchBills function not found');
+                        
+                        // Fallback implementation
+                        const savedBills = JSON.parse(localStorage.getItem('savedBills') || '[]');
+                        
+                        if (!query) {
+                            // If query is empty, show all bills
+                            if (typeof window.displaySavedBills === 'function') {
+                                window.displaySavedBills(savedBills);
+                            }
+                            return;
+                        }
+                        
+                        // Filter bills by customer name
+                        const lowerQuery = query.toLowerCase();
+                        const filteredBills = savedBills.filter(bill => 
+                            bill.customerName && bill.customerName.toLowerCase().includes(lowerQuery)
+                        );
+                        
+                        // Display filtered bills
+                        if (typeof window.displaySavedBills === 'function') {
+                            window.displaySavedBills(filteredBills);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* Smooth Cart Interactions - Prevent flickering */
+
+/* Apply smooth transitions to cart elements */
+.selected-item {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth quantity change animation */
+.quantity-display,
+.cart-quantity {
+  transition: opacity 0.15s ease;
+}
+
+/* Ripple effect for quantity buttons */
+.quantity-btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.quantity-btn::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.5s;
+}
+
+.quantity-btn:active::after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* Prevent layout recalculation on delete */
+.selected-item.removing {
+  animation: none !important;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.1s ease, transform 0.1s ease; /* Faster transition from 0.2s to 0.1s */
+  pointer-events: none; /* Prevent any further interaction */
+  position: absolute; /* Remove from flow immediately */
+  width: calc(100% - 20px); /* Maintain width to prevent layout shift */
+  visibility: hidden; /* Hide immediately */
+}
+
+/* Better floating cart transitions */
+.floating-cart {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimized transitions for overall cart elements */
+#selected-items-list {
+  position: relative;
+  will-change: contents;
+  min-height: 1px; /* Maintains height to prevent jumps */
+}
+
+/* Add new rule to parent container for better item removal */
+#selected-items-list.removing-item {
+  overflow: hidden; /* Prevent scrollbar flashing during removal */
+}
+
+/* Optimize grand total updates */
+.grand-total #grand-total-value {
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.grand-total #grand-total-value.updating {
+  color: #4CAF50;
+}
+
+/* Prevent layout shift when removing items */
+#selected-items-list.updating-items {
+  min-height: 1px;
+}
